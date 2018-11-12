@@ -215,7 +215,7 @@ class UserProfile {
   Photo get thumbnail => _thumbnail;
 
   /// Gets the collection of phone numbers of the [UserProfile]
-  List<String> get addresses => _addresses;
+  Map get addresses => _addresses;
 }
 
 /// Used to get the user profile
