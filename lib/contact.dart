@@ -170,9 +170,9 @@ class UserProfile {
   String _fullName;
   Photo _photo;
   Photo _thumbnail;
-  List<String> _addresses;
+  Map _addresses;     // Change from List<String>()
 
-  UserProfile() : _addresses = new List<String>();
+  UserProfile() : _addresses = new Map();
 
   UserProfile._fromJson(Map data) {
     if (data.containsKey("name")) {
@@ -185,7 +185,21 @@ class UserProfile {
       this._thumbnail = new Photo(Uri.parse(data["thumbnail"]));
     }
     if (data.containsKey("addresses")) {
-      _addresses = List.from(data["addresses"]);
+      var tempAdresses = List.from(data["addresses"]);
+      Map address = new Map();
+
+      int c = 0;
+      tempAdresses.forEach((a) {
+        var label = a.toString().split("|")[0];
+        var value = a.toString().split("|")[1];
+        if(label == "null") {
+          label = "label$c";
+          c++;
+        }
+        address[label] = value;
+      });
+      
+      _addresses = address;
     }
   }
 
