@@ -91,8 +91,9 @@ class UserProfileHandler implements PluginRegistry.RequestPermissionsResultListe
             Uri uri = Uri.withAppendedPath(contentUri, ContactsContract.Contacts.Entity.CONTENT_DIRECTORY);
 
             String[] projection = new String[]{
-                    ContactsContract.Contacts.Entity.DATA1,
-                    ContactsContract.Contacts.Entity.MIMETYPE
+                    ContactsContract.Contacts.Entity.MIMETYPE,
+                    ContactsContract.Contacts.Entity.DATA3,
+                    ContactsContract.Contacts.Entity.DATA1
             };
 
             Cursor cursor = getContentResolver().query(uri, projection, null, null, null);
@@ -100,8 +101,8 @@ class UserProfileHandler implements PluginRegistry.RequestPermissionsResultListe
             if (cursor != null) {
                 cursor.moveToFirst();
                 do {
-                    if (cursor.getString(1).equals("vnd.android.cursor.item/phone_v2")) {
-                        addressCollection.put(cursor.getString(0));
+                    if (cursor.getString(0).equals("vnd.android.cursor.item/phone_v2")) {
+                        addressCollection.put(cursor.getString(1) + "|" + cursor.getString(2));
                     }
                 }
                 while (cursor.moveToNext());
